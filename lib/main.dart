@@ -931,29 +931,34 @@ class _HeartDiseasePredictorState extends State<HeartDiseasePredictor> {
       Colors.orange,
       Colors.red,
     ];
-
+    final b = BorderRadius.circular(2);
     for (int i = 0; i < _modelPerformance.length; i++) {
       final model = _modelPerformance[i];
       barGroups.add(
         BarChartGroupData(
+          barsSpace: 15,
           x: i,
           barRods: [
             BarChartRodData(
+              borderRadius: b,
               toY: model['accuracy'] * 100,
               color: metricColors[0],
               width: 16,
             ),
             BarChartRodData(
+              borderRadius: b,
               toY: model['precision'] * 100,
               color: metricColors[1],
               width: 16,
             ),
             BarChartRodData(
+              borderRadius: b,
               toY: model['recall'] * 100,
               color: metricColors[2],
               width: 16,
             ),
             BarChartRodData(
+              borderRadius: b,
               toY: model['f1'] * 100,
               color: metricColors[3],
               width: 16,
@@ -987,6 +992,9 @@ class _HeartDiseasePredictorState extends State<HeartDiseasePredictor> {
                         barTouchData: BarTouchData(
                           enabled: true,
                           touchTooltipData: BarTouchTooltipData(
+                            tooltipPadding: EdgeInsets.all(4),
+                            fitInsideHorizontally: true, rotateAngle: 90,
+                            // fitInsideVertically: true,
                             // tooltipBgColor: Colors.blueGrey,
                             getTooltipItem: (group, groupIndex, rod, rodIndex) {
                               final metricName = [
@@ -997,7 +1005,8 @@ class _HeartDiseasePredictorState extends State<HeartDiseasePredictor> {
                               ][rodIndex];
                               return BarTooltipItem(
                                 '$metricName: ${rod.toY.toStringAsFixed(1)}%',
-                                const TextStyle(color: Colors.white),
+                                const TextStyle(
+                                    color: Colors.white, fontSize: 10),
                               );
                             },
                           ),
@@ -1071,7 +1080,7 @@ class _HeartDiseasePredictorState extends State<HeartDiseasePredictor> {
                     itemBuilder: (context, index) {
                       final model = _modelPerformance[index];
                       return Card(
-                        elevation: 2,
+                        elevation: 0,
                         color: model['color'].withOpacity(0.1),
                         child: Padding(
                           padding: const EdgeInsets.all(12.0),
