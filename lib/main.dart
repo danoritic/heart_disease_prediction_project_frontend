@@ -69,7 +69,6 @@ class _HeartDiseasePredictorState extends State<HeartDiseasePredictor> {
   int _currentTab = 0;
   final List<Map<String, dynamic>> _modelPerformance = [
     {
-      "textEditingController": TextEditingController(),
       'name': 'XGBoost',
       'accuracy': 0.90,
       'precision': 0.89,
@@ -79,7 +78,6 @@ class _HeartDiseasePredictorState extends State<HeartDiseasePredictor> {
       'color': Colors.green
     },
     {
-      "textEditingController": TextEditingController(),
       'name': 'Random Forest',
       'accuracy': 0.88,
       'precision': 0.87,
@@ -89,7 +87,6 @@ class _HeartDiseasePredictorState extends State<HeartDiseasePredictor> {
       'color': Colors.blue
     },
     {
-      "textEditingController": TextEditingController(),
       'name': 'SVM',
       'accuracy': 0.87,
       'precision': 0.86,
@@ -99,7 +96,6 @@ class _HeartDiseasePredictorState extends State<HeartDiseasePredictor> {
       'color': Colors.purple
     },
     {
-      "textEditingController": TextEditingController(),
       'name': 'Logistic Regression',
       'accuracy': 0.85,
       'precision': 0.84,
@@ -109,7 +105,6 @@ class _HeartDiseasePredictorState extends State<HeartDiseasePredictor> {
       'color': Colors.orange
     },
     {
-      "textEditingController": TextEditingController(),
       'name': 'KNN',
       'accuracy': 0.82,
       'precision': 0.80,
@@ -119,7 +114,6 @@ class _HeartDiseasePredictorState extends State<HeartDiseasePredictor> {
       'color': Colors.red
     },
     {
-      "textEditingController": TextEditingController(),
       'name': 'Decision Tree',
       'accuracy': 0.79,
       'precision': 0.76,
@@ -672,21 +666,25 @@ class _HeartDiseasePredictorState extends State<HeartDiseasePredictor> {
       onChanged: (value) {
         setState(() {
           // textEditingController
-          (_inputData[field['textEditingController']] as TextEditingController)
-              .text = value ?? '';
+          (field['textEditingController'] as TextEditingController).text =
+              value ?? '';
           _inputData[field['name']] = value;
         });
       },
     );
   }
 
+  Map<String, TextEditingController> textECDetails = {};
   Widget _buildNumberField(Map<String, dynamic> field) {
-    // TextEditingController myTextEditingController = TextEditingController();
-    // myTextEditingController.text = _inputData[field['name']];
+    textECDetails[field["name"]] ??=
+        TextEditingController(text: _inputData[field['name']]);
+    TextEditingController myTextEditingController =
+        textECDetails[field["name"]]!;
+
+    print("dndsajdjkasdbkajdb-${field}");
     return TextFormField(
       keyboardType: TextInputType.number,
-      controller:
-          (_inputData[field['textEditingController']] as TextEditingController),
+      controller: myTextEditingController,
       decoration: InputDecoration(
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
         suffixText: field['unit'],
@@ -694,8 +692,7 @@ class _HeartDiseasePredictorState extends State<HeartDiseasePredictor> {
       inputFormatters: [FilteringTextInputFormatter.digitsOnly],
       onChanged: (value) {
         setState(() {
-          (_inputData[field['textEditingController']] as TextEditingController)
-              .text = value;
+          // myTextEditingController.text = value;
           _inputData[field['name']] = value;
         });
       },
